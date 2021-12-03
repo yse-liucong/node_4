@@ -1,21 +1,10 @@
-const express = require('express')
-const routes = ruquire('./roures7')
-const dotenv = require('dotenv')
+const express = require("express")
+const router = express.Router()
 
-dotenv.config()
-const host = process.env.HOST
-const port = process.env.PORT
 const default_login_name = process.env.LOGIN_NAME
 const default_passsword = process.env.PASSWORD
 
-const app = express()
-
-//public フォルダを許可
-app.use(express.static(__dirname + '/public'))
-//URLエンコード
-app.use(express.urlencoded({ extended: true }))
-
-app.post('/auth', (req, res) => {
+router.post('/auth', (req, res) => {
     let message = 'ログインできません'
     const login_name = req.body.login_name
     const password = req.body.password
@@ -29,15 +18,14 @@ app.post('/auth', (req, res) => {
     res.send(message)
 })
 
-app.use(routes)
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.send('Hello YSE!!!!')
 })
 
-app.get('/profile', (req, res) => {
+router.get('/profile', (req, res) => {
     res.send('This is profile page')
 })
 
-app.listen(port, host, () => {
+router.listen(port, host, () => {
     console.log('http://' + host + ':' + port)
 })
